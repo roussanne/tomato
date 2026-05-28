@@ -4,8 +4,8 @@ class AmazonControl:
     
     # 생성자 -> 아마존 서비스에 필요한 변수들을 저장할 곳
     def __init__(self):
-        self.aws_access_key_id = "AKIARQUWVSEJM4LGR2II"
-        self.aws_secret_access_key = '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'
+        self.aws_access_key_id = "id"
+        self.aws_secret_access_key = 'key'
         self.region_name = 'ap-northeast-2'
         self.min_inference_units=1 
         self.version_name='CherryTomato.2023-12-01T16.17.45'

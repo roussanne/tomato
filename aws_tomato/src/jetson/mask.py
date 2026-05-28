@@ -102,8 +102,8 @@ def find_tomato(rekognition_client, model, origin_frame):
             center_point_y = top + height/2
 
             # depth_data = depth(center_point_x, center_point_y)
-            point_depth = {left, top, width, height, center_point_x, center_point_y}
-
+            point_depth = {'left': left, 'top': top, 'width':width, 'height':height, 'center_point_x':center_point_x, 'center_point_y':center_point_y}
+            
             print(point_depth)
 
             point_data.append(point_depth)
