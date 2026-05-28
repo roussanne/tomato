@@ -1,3 +1,4 @@
+import os
 import cv2
 import math
 import boto3
@@ -102,8 +103,12 @@ def find_tomato(rekognition_client, model, origin_frame):
             center_point_y = top + height/2
 
             # depth_data = depth(center_point_x, center_point_y)
-            point_depth = {'left': left, 'top': top, 'width':width, 'height':height, 'center_point_x':center_point_x, 'center_point_y':center_point_y}
-            
+            point_depth = {
+                'left': left, 'top': top,
+                'width': width, 'height': height,
+                'center_x': center_point_x, 'center_y': center_point_y
+            }
+
             print(point_depth)
 
             point_data.append(point_depth)
@@ -223,10 +228,10 @@ def calc_difference(first_point_data, second_point_data):
     return ripen_tomato, unripen_tomato
 
 def main():
-    aws_access_key_id = "AKIARQUWVSEJM4LGR2II"
-    aws_secret_access_key = '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'
-    region_name = 'ap-northeast-2'
-    model = "arn:aws:rekognition:ap-northeast-2:104468943122:project/CherryTomato/version/CherryTomato.2023-12-01T16.17.45/1701418665992"
+    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    region_name = os.environ.get('AWS_REGION', 'ap-northeast-2')
+    model = os.environ.get('AWS_REKOGNITION_MODEL_ARN')
 
     rekognition_client = boto3.client('rekognition', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key, region_name=region_name)
 

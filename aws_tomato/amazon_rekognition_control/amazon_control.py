@@ -1,15 +1,17 @@
+import os
 import boto3
 
 class AmazonControl:
-    
+
     # 생성자 -> 아마존 서비스에 필요한 변수들을 저장할 곳
     def __init__(self):
-        self.aws_access_key_id = "id"
-        self.aws_secret_access_key = 'key'
-        self.region_name = 'ap-northeast-2'
-        self.min_inference_units=1 
+        self.aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+        self.aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+        self.region_name = os.environ.get('AWS_REGION', 'ap-northeast-2')
+        self.min_inference_units=1
         self.version_name='CherryTomato.2023-12-01T16.17.45'
-        self.model_arn = 'arn:aws:rekognition:ap-northeast-2:104468943122:project/CherryTomato/version/CherryTomato.2023-12-01T16.17.45/1701418665992'
+        self.model_arn = os.environ.get('AWS_REKOGNITION_MODEL_ARN')
+        self.project_arn = os.environ.get('AWS_REKOGNITION_PROJECT_ARN')
 
     # 아마존 Rekognition의 사용을 시작하기 위한 코드
     def start_rekognition(self):
