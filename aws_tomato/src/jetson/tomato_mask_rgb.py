@@ -1,10 +1,13 @@
+"""RGB 이미지에서 R-G 차이 마스크와 Hue 히스토그램으로 토마토 숙성도를 판정하는 스크립트."""
+
 import cv2
 import numpy as np
 import math
 from matplotlib import pyplot as plt
 
-def ripeness(each_tomato):
 
+def ripeness(each_tomato):
+    """0이 아닌 Hue 값의 가중 평균을 이용해 숙성도("green"/"turning"/"lightred"/"red")를 반환한다."""
     hsv_tomato = cv2.cvtColor(each_tomato, cv2.COLOR_BGR2HSV)
 
     hue_channel = hsv_tomato[:,:,0]

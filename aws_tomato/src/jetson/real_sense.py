@@ -1,9 +1,13 @@
+"""Intel RealSense D435 카메라에서 RGB 영상과 깊이 데이터를 수집하는 모듈."""
+
 import cv2
 import numpy as np
 import pyrealsense2 as rs
 import time
 
+
 def rgb_depth():
+    """RealSense 카메라를 15프레임 구동해 깊이 데이터(2D 리스트)와 컬러 이미지를 반환한다."""
     # RealSense pipeline 설정
     pipeline = rs.pipeline()
     config = rs.config()
