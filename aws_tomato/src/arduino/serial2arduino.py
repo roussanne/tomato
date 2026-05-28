@@ -1,3 +1,5 @@
+"""Arduino 직렬 통신으로 로봇 팔의 X/Y/Z 좌표를 전송하는 스크립트."""
+
 import serial
 import time
 

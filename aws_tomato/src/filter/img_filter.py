@@ -1,9 +1,12 @@
+"""토마토 이미지 전처리 필터 모음 (조명 보정, 히스토그램 정규화)."""
+
 import cv2
 import copy
 import numpy as np
 
- 
+
 def homomorphic_filter(img):
+    """FFT 기반 Homomorphic 필터로 불균일한 조명을 보정한 BGR 이미지를 반환한다."""
     ### homomorphic filter는 gray scale image에 대해서 밖에 안 되므로
     ### YUV color space로 converting한 뒤 Y에 대해 연산을 진행
     img_YUV = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
@@ -73,6 +76,7 @@ def green_filter():
     return ""
 
 def histogram_normalize(img):
+    """YUV 공간에서 Y 채널에 히스토그램 평활화를 적용해 대비를 개선한 BGR 이미지를 반환한다."""
     #--① 컬러 스케일을 BGR에서 YUV로 변경
     img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV) 
 

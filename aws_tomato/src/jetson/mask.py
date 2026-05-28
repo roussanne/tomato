@@ -1,3 +1,5 @@
+"""AWS Rekognition과 적응형 색상 필터를 결합한 토마토 감지 및 숙성도 판정 모듈."""
+
 import os
 import cv2
 import math
@@ -34,7 +36,7 @@ def rank():
     return ""
 
 def ripeness(each_tomato):
-
+    """토마토 이미지의 Hue 히스토그램을 분석해 숙성도("green"/"turning"/"lightred"/"red")를 반환한다."""
     hsv_tomato = cv2.cvtColor(each_tomato, cv2.COLOR_BGR2HSV)
 
     hue_channel = hsv_tomato[:,:,0]
@@ -64,7 +66,7 @@ def roi():
     return ""
 
 def find_tomato(rekognition_client, model, origin_frame):
-    
+    """Rekognition으로 프레임에서 토마토를 감지하고 경계 상자 좌표 리스트와 어노테이션 이미지를 반환한다."""
     # if id == "first":
     #     origin_frame = cv2.imread("./image/mixed_tomato_1.jpg")
         
@@ -132,7 +134,7 @@ def find_tomato(rekognition_client, model, origin_frame):
     return point_data, frame
 
 def adapt_filter(frame):
-
+    """R-G 채널 차이, 침식/팽창, 색상 마스킹을 조합해 잘 익은(빨간) 토마토 영역만 추출한 이미지를 반환한다."""
     gray_img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     hsv_img = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -200,8 +202,8 @@ def adapt_filter(frame):
 
 
 def find_red_tomato(rekognition_client, model, first_frame):
-
-    #Red ( 잘 익은 토마토 ) 를 찾기위한 필터
+    """adapt_filter로 빨간 영역을 강조한 뒤 Rekognition으로 잘 익은 토마토만 감지해 반환한다."""
+    # Red ( 잘 익은 토마토 ) 를 찾기위한 필터
     # origin_frame = cv2.imread("./image/mixed_tomato_1.jpg")
     # frame = adapt_filter(origin_frame)
     frame = adapt_filter(first_frame)
@@ -215,7 +217,7 @@ def find_red_tomato(rekognition_client, model, first_frame):
 
 
 def calc_difference(first_point_data, second_point_data):
-
+    """전체 감지 결과와 빨간 토마토 감지 결과를 비교해 익은/덜 익은 토마토 목록을 반환한다."""
     ripen_tomato = []
 
     for i in range(0, len(first_point_data)):
